@@ -33,6 +33,7 @@ public class HelloWorldController {
 
     @GetMapping("/populate")
     public String populateDB() {
+
         Player luffy = new Player.Builder()
                 .alias("Monkey D. Luffy")
                 .email("luffy@interviewbit.com")
@@ -45,12 +46,27 @@ public class HelloWorldController {
                 .saltedHashedPassword("poneglyph")
                 .build();
         playerRepository.save(robin);
+        Player tom = new Player.Builder()
+                .alias("Tom Riddle")
+                .email("tom@interviewbit.com")
+                .saltedHashedPassword("riddiculus")
+                .build();
+        playerRepository.save(tom);
+
+        Player scooby = new Player.Builder()
+                .alias("Scooby Doo")
+                .email("doo@interviewbit.com")
+                .saltedHashedPassword("snacks")
+                .build();
+        playerRepository.save(scooby);
 
         questionRepository.save(new Question(
                 "What is the most important Poneglyph",
                 "Rio Poneglyph",
                 GameMode.IS_THIS_A_FACT
         ));
+
+        
 
         return "populated";
     }
@@ -94,6 +110,7 @@ public class HelloWorldController {
     public Round getRoundById(@PathVariable(name="id") Long id) {
         return roundsRepository.findById(id).orElseThrow();
     }
+
 
     // Admins
     // ContentWriters
