@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+@MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class Auditable implements Serializable {
 
