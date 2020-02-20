@@ -12,7 +12,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "playeranswers")
 public class PlayerAnswer extends Auditable {
-
     @NotNull
     @ManyToOne
     @Getter

@@ -12,19 +12,16 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "ellenanswers")
 public class EllenAnswer extends Auditable {
-
-    @NotNull
     @ManyToOne
+    @NotNull
     private Question question;
-
 
     @Getter
     @Setter
-    private Long votes;
+    private Long votes = 0L;
 
     @NotBlank
     @Getter
     @Setter
     private String answer;
-
 }

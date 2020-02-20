@@ -9,9 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Entity
-@Table(name = "rounds")
+@Table(name="rounds")
 public class Round extends Auditable {
-
     @ManyToOne
     @Getter
     @Setter
@@ -20,29 +19,22 @@ public class Round extends Auditable {
 
     @ManyToOne
     @NotNull
-    @Getter
-    @Setter
+    @Getter @Setter
     private Question question;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @Getter
-    @Setter
+    @Getter @Setter
     private Map<Player, PlayerAnswer> playerAnswers = new HashMap<>();
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @Getter
-    @Setter
+    @Getter @Setter
     private Map<Player, PlayerAnswer> selectedAnswers = new HashMap<>();
 
     @ManyToOne
-    @Getter
-    @Setter
+    @Getter @Setter
     private EllenAnswer ellenAnswer;
 
     @NotNull
-    @Getter
-    @Setter
+    @Getter @Setter
     private int roundNumber;
-
-
 }

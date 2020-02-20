@@ -7,15 +7,13 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.*;
 
-
 @Entity
 @Table(name = "games")
-public class Game  extends Auditable {
-
+public class Game extends Auditable {
     @ManyToMany
     @Getter
     @Setter
-    Set<Player> players = new HashSet<>();
+    private Set<Player> players = new HashSet<>();
 
     @Getter
     @Setter
@@ -24,7 +22,8 @@ public class Game  extends Auditable {
     private GameMode gameMode;
 
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL)
-    @Getter @Setter
+    @Getter
+    @Setter
     private List<Round> rounds = new ArrayList<>();
 
     @Getter
@@ -35,13 +34,15 @@ public class Game  extends Auditable {
     @Setter
     private Boolean hasEllen = false;
 
-    @ManyToOne
     @NotNull
     @Getter
     @Setter
+    @ManyToOne
     private Player leader;
 
     @ManyToMany(cascade = CascadeType.ALL)
+    @Getter
+    @Setter
     private Map<Player, Stat> playerStats = new HashMap<>();
 
     @Enumerated(EnumType.STRING)
@@ -53,7 +54,4 @@ public class Game  extends Auditable {
     @Getter
     @Setter
     private Set<Player> readyPlayers = new HashSet<>();
-
-
-
 }

@@ -11,7 +11,6 @@ import javax.validation.constraints.NotBlank;
 @Entity
 @Table(name = "roles")
 public class Role extends Auditable {
-
     @NotBlank
     @Column(unique = true)
     @Getter
@@ -22,6 +21,4 @@ public class Role extends Auditable {
     @Getter
     @Setter
     private String description;
-
-
 }

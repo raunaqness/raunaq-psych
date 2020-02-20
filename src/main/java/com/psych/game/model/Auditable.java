@@ -13,13 +13,14 @@ import java.util.Date;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class Auditable implements Serializable {
-
     @Id
-    @GeneratedValue(generator = "sequence", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name="sequence", allocationSize = 10)
+    @GeneratedValue(generator = "sequence",
+            strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "sequence",
+            allocationSize = 10)
     @Getter
     @Setter
-    private long id;
+    private Long id;
 
     @Column(nullable = false, updatable = false)
     @CreatedDate
@@ -33,7 +34,5 @@ public abstract class Auditable implements Serializable {
     @Column(nullable = false)
     @Getter
     @Setter
-    private Date updatedAt;
-
-
+    private Date updatedAt = new Date();
 }
