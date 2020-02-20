@@ -1,10 +1,10 @@
 package com.psych.game;
 
-import com.psych.game.model.GameMode;
-import com.psych.game.model.Player;
-import com.psych.game.model.Question;
+import com.psych.game.model.*;
+import com.psych.game.repositories.GamesRepository;
 import com.psych.game.repositories.PlayerRepository;
 import com.psych.game.repositories.QuestionRepository;
+import com.psych.game.repositories.RoundsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +20,11 @@ public class HelloWorldController {
     private PlayerRepository playerRepository;
     @Autowired
     private QuestionRepository questionRepository;
+    @Autowired
+    private GamesRepository gamesRepository;
+
+    @Autowired
+    private RoundsRepository roundsRepository;
 
     @GetMapping("/")
     public String hello() {
@@ -70,11 +75,27 @@ public class HelloWorldController {
         return playerRepository.findById(id).orElseThrow();
     }
 
-    // Games
-    // Players
+    @GetMapping("/games")
+    public List<Game> getAllGames() {
+        return gamesRepository.findAll();
+    }
+
+    @GetMapping("/games/{id}")
+    public Game getGameById(@PathVariable(name="id") Long id) {
+        return gamesRepository.findById(id).orElseThrow();
+    }
+
+    @GetMapping("/rounds")
+    public List<Round> getAllRounds() {
+        return roundsRepository.findAll();
+    }
+
+    @GetMapping("/rounds/{id}")
+    public Round getRoundById(@PathVariable(name="id") Long id) {
+        return roundsRepository.findById(id).orElseThrow();
+    }
+
     // Admins
-    // Questions
-    // Rounds
     // ContentWriters
 }
 
