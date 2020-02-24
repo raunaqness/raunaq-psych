@@ -1,5 +1,6 @@
 package com.psych.game.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +14,10 @@ import javax.validation.constraints.NotNull;
 @Table(name = "ellenanswers")
 public class EllenAnswer extends Auditable {
     @ManyToOne
+    @JsonBackReference
     @NotNull
+    @Getter
+    @Setter
     private Question question;
 
     @Getter

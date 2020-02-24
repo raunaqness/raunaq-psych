@@ -1,7 +1,11 @@
 package com.psych.game.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -19,21 +23,28 @@ public class Player extends User {
 
     @Getter
     @Setter
+    @URL
     private String psychFaceURL;
 
     @Getter
     @Setter
+    @URL
     private String picURL;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @Getter @Setter
+    @JsonManagedReference
+    @Getter
+    @Setter
     private Stat stat = new Stat();
 
     @ManyToMany(mappedBy = "players")
-    @Getter @Setter
+    @JsonIdentityReference
+    @Getter
+    @Setter
     private Set<Game> games = new HashSet<>();
 
-    public Player() {}
+    public Player() {
+    }
 
     private Player(Builder builder) {
         setEmail(builder.email);

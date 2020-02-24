@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="admins")
+@Table(name = "admins")
 public class Admin extends Employee {
-
 }

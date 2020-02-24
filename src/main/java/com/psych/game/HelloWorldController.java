@@ -1,10 +1,12 @@
 package com.psych.game;
 
-import com.psych.game.model.*;
-import com.psych.game.repositories.GamesRepository;
+import com.psych.game.model.Game;
+import com.psych.game.model.GameMode;
+import com.psych.game.model.Player;
+import com.psych.game.model.Question;
+import com.psych.game.repositories.GameRepository;
 import com.psych.game.repositories.PlayerRepository;
 import com.psych.game.repositories.QuestionRepository;
-import com.psych.game.repositories.RoundsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,10 +23,7 @@ public class HelloWorldController {
     @Autowired
     private QuestionRepository questionRepository;
     @Autowired
-    private GamesRepository gamesRepository;
-
-    @Autowired
-    private RoundsRepository roundsRepository;
+    private GameRepository gameRepository;
 
     @GetMapping("/")
     public String hello() {
@@ -33,6 +32,9 @@ public class HelloWorldController {
 
     @GetMapping("/populate")
     public String populateDB() {
+        playerRepository.deleteAll();
+        questionRepository.deleteAll();
+        gameRepository.deleteAll();
 
         Player luffy = new Player.Builder()
                 .alias("Monkey D. Luffy")
@@ -46,19 +48,12 @@ public class HelloWorldController {
                 .saltedHashedPassword("poneglyph")
                 .build();
         playerRepository.save(robin);
-        Player tom = new Player.Builder()
-                .alias("Tom Riddle")
-                .email("tom@interviewbit.com")
-                .saltedHashedPassword("riddiculus")
-                .build();
-        playerRepository.save(tom);
 
-        Player scooby = new Player.Builder()
-                .alias("Scooby Doo")
-                .email("doo@interviewbit.com")
-                .saltedHashedPassword("snacks")
-                .build();
-        playerRepository.save(scooby);
+        Game game = new Game();
+        game.setGameMode(GameMode.IS_THIS_A_FACT);
+        game.setLeader(luffy);
+        game.getPlayers().add(luffy);
+        gameRepository.save(game);
 
         questionRepository.save(new Question(
                 "What is the most important Poneglyph",
@@ -66,7 +61,11 @@ public class HelloWorldController {
                 GameMode.IS_THIS_A_FACT
         ));
 
-        
+        questionRepository.save(new Question(
+                "How far can Luffy stretch?",
+                "56 Gomu Gomus",
+                GameMode.IS_THIS_A_FACT
+        ));
 
         return "populated";
     }
@@ -77,7 +76,7 @@ public class HelloWorldController {
     }
 
     @GetMapping("/question/{id}")
-    public Question getQuestionById(@PathVariable(name="id") Long id) {
+    public Question getQuestionById(@PathVariable(name = "id") Long id) {
         return questionRepository.findById(id).orElseThrow();
     }
 
@@ -87,32 +86,25 @@ public class HelloWorldController {
     }
 
     @GetMapping("/player/{id}")
-    public Player getPlayerById(@PathVariable(name="id") Long id) {
+    public Player getPlayerById(@PathVariable(name = "id") Long id) {
         return playerRepository.findById(id).orElseThrow();
     }
 
     @GetMapping("/games")
     public List<Game> getAllGames() {
-        return gamesRepository.findAll();
+        return gameRepository.findAll();
     }
 
-    @GetMapping("/games/{id}")
-    public Game getGameById(@PathVariable(name="id") Long id) {
-        return gamesRepository.findById(id).orElseThrow();
+    @GetMapping("/game/{id}")
+    public Game getGameById(@PathVariable(name = "id") Long id) {
+        return gameRepository.findById(id).orElseThrow();
     }
 
-    @GetMapping("/rounds")
-    public List<Round> getAllRounds() {
-        return roundsRepository.findAll();
-    }
-
-    @GetMapping("/rounds/{id}")
-    public Round getRoundById(@PathVariable(name="id") Long id) {
-        return roundsRepository.findById(id).orElseThrow();
-    }
-
-
+    // Games
+    // Players
     // Admins
+    // Questions
+    // Rounds
     // ContentWriters
 }
 

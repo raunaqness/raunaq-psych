@@ -14,16 +14,18 @@ import java.util.Set;
 public abstract class User extends Auditable {
     @Email
     @NotBlank
-    @Column(unique=true)
+    @Column(unique = true)
     @Getter
     @Setter
     private String email;
 
     @NotBlank
-    @Getter @Setter
+    @Getter
+    @Setter
     private String saltedHashedPassword;
 
     @ManyToMany
-    @Getter @Setter
+    @Getter
+    @Setter
     Set<Role> roles = new HashSet<>();
 }
