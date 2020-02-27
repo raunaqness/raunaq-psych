@@ -7,7 +7,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 public class CustomUserDetails extends User implements UserDetails {
     public CustomUserDetails(User user) {
@@ -18,17 +21,16 @@ public class CustomUserDetails extends User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<Role> roles = super.getRoles();
         List<GrantedAuthority> authorities = new ArrayList<>();
-        for(Role role: roles)
+        for(Role role: roles) {
             authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
-        return authorities;
+        }
 
+        return authorities;
     }
 
     @Override
     public String getPassword() {
         return super.getSaltedHashedPassword();
-//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//        return encoder.encode(super.getSaltedHashedPassword());
     }
 
     @Override

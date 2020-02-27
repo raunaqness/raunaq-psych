@@ -16,12 +16,15 @@ import java.util.Optional;
 public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
+
     @SneakyThrows
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findByEmail(email);
-        if(user.isEmpty())
+        if(user.isEmpty()) {
             throw new NoSuchUserException("No user registered with " + email);
+        }
+
         return new CustomUserDetails(user.get());
     }
 }

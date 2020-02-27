@@ -38,8 +38,8 @@ public class Question extends Auditable {
     public Question() {
     }
 
-    public Question(@NotNull String question, @NotNull String correctAnswer, @NotNull GameMode gameMode) {
-        this.questionText = question;
+    public Question(@NotNull String questionText, @NotNull String correctAnswer, @NotNull GameMode gameMode) {
+        this.questionText = questionText;
         this.correctAnswer = correctAnswer;
         this.gameMode = gameMode;
     }

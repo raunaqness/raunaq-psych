@@ -5,9 +5,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SpringConfiguration {
-
     @Bean
-    public static ApplicationContextProvider contextProvider(){
+    public static ApplicationContextProvider contextProvider() {
         return new ApplicationContextProvider();
     }
 }

@@ -1,6 +1,5 @@
 package com.psych.game.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
@@ -26,6 +25,13 @@ public class Player extends User {
     @URL
     private String psychFaceURL;
 
+    @OneToOne(cascade=CascadeType.ALL)
+    @JsonIdentityReference
+    private Game currentGame;
+
+
+
+
     @Getter
     @Setter
     @URL
@@ -46,16 +52,21 @@ public class Player extends User {
     public Player() {
     }
 
+    public void setCurrentGame(Game currentGame) {
+        this.currentGame = currentGame;
+    }
+
+    public Game getCurrentGame() {
+        return currentGame;
+        //todo
+    }
+
     private Player(Builder builder) {
         setEmail(builder.email);
         setSaltedHashedPassword(builder.saltedHashedPassword);
         setAlias(builder.alias);
         setPsychFaceURL(builder.psychFaceURL);
         setPicURL(builder.picURL);
-    }
-
-    public Game getCurrentGame() {
-        // todo
     }
 
     public static final class Builder {
@@ -98,5 +109,3 @@ public class Player extends User {
         }
     }
 }
-
-

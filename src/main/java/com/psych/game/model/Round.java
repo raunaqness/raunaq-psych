@@ -52,7 +52,7 @@ public class Round extends Auditable {
     @Setter
     private int roundNumber;
 
-    public Round(){}
+    public Round() { }
 
     public Round(@NotNull Game game, @NotNull Question question, @NotNull int roundNumber) {
         this.game = game;
@@ -61,38 +61,36 @@ public class Round extends Auditable {
     }
 
     public void submitAnswer(Player player, String answer) throws InvalidGameActionException {
-        if(submittedAnswers.containsKey(player))
-            throw new InvalidGameActionException("Player has already submitted an answer.");
+        if(submittedAnswers.containsKey(player)) {
+            throw new InvalidGameActionException("Player has already submitted answer for this round");
+        }
 
-        for(PlayerAnswer existingAnswer: submittedAnswers.values())
-            if(answer.equals(existingAnswer.getAnswer()))
-                throw new InvalidGameActionException("Duplicate Answer");
+        for(PlayerAnswer existingAnswer: submittedAnswers.values()) {
+            if(answer.equals(existingAnswer.getAnswer())) {
+                throw new InvalidGameActionException("Duplciate answer");
+            }
+        }
 
-            submittedAnswers.put(player, new PlayerAnswer(this, player, answer));
-
-        // todo
-
-        // if player has already submitted answer, then reject the answer
-        // if answer is duplicate, reject answer
+        submittedAnswers.put(player, new PlayerAnswer(this, player, answer));
     }
 
-    public boolean allAnswerSubmitted(int numPlayers) {
-
-        return submittedAnswers.size() == numPlayers;
+    public boolean allAnswersSubmitted(int numPlayers) {
+        return (submittedAnswers.size() == numPlayers);
     }
 
     public void selectAnswer(Player player, PlayerAnswer selectedAnswer) throws InvalidGameActionException {
-        if(submittedAnswers.containsKey(player))
-            throw new InvalidGameActionException("Player has already selected an answer for this round.");
+        if(selectedAnswers.containsKey(player)) {
+            throw new InvalidGameActionException("Player has already selected answer for this round");
+        }
 
-        if(selectedAnswer.getPlayer().equals(player))
-            throw new InvalidGameActionException("Can't select your own answer.");
-
+        if(selectedAnswer.getPlayer().equals(player)) {
+            throw new InvalidGameActionException("Can't select your own anwer");
+        }
 
         selectedAnswers.put(player, selectedAnswer);
     }
 
     public boolean allAnswersSelected(int numPlayers) {
-        return selectedAnswers.size() == numPlayers;
+        return (selectedAnswers.size() == numPlayers);
     }
 }

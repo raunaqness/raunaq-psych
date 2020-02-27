@@ -1,7 +1,6 @@
 package com.psych.game.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerator;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,9 +28,9 @@ public abstract class Auditable implements Serializable {
     @Setter
     private Long id;
 
-    @Column(nullable = false, updatable = false)
-    @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
     @Getter
     @Setter
     private Date createdAt = new Date();
@@ -42,5 +41,4 @@ public abstract class Auditable implements Serializable {
     @Getter
     @Setter
     private Date updatedAt = new Date();
-
 }

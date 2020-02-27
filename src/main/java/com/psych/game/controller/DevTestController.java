@@ -2,7 +2,6 @@ package com.psych.game.controller;
 
 import com.psych.game.model.*;
 import com.psych.game.repositories.*;
-import org.apache.catalina.util.ErrorPageSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/dev-test")
@@ -25,10 +23,12 @@ public class DevTestController {
     private UserRepository userRepository;
     @Autowired
     private RoundRepository roundRepository;
+    @Autowired
+    private AdminRepository adminRepository;
 
     @GetMapping("/")
     public String hello() {
-        return "Hello, World!";
+        return "Hello, World";
     }
 
     @GetMapping("/populate")
@@ -37,6 +37,7 @@ public class DevTestController {
             player.getGames().clear();
             playerRepository.save(player);
         }
+
         gameRepository.deleteAll();
         playerRepository.deleteAll();
         questionRepository.deleteAll();
@@ -95,42 +96,31 @@ public class DevTestController {
         return playerRepository.findById(id).orElseThrow();
     }
 
-    @GetMapping("/users")
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
-    @GetMapping("/user/{id}")
-    public User getUserById(@PathVariable(name = "id") Long id) {
-        return userRepository.findById(id).orElseThrow();
-    }
-
     @GetMapping("/games")
-    public List<Game> getAllGames() {
-        return gameRepository.findAll();
-    }
+    public List<Game> getAllGames() { return gameRepository.findAll(); }
 
-    @GetMapping("/game/{id}")
+    @GetMapping("game/{id}")
     public Game getGameById(@PathVariable(name = "id") Long id) {
         return gameRepository.findById(id).orElseThrow();
     }
 
-    // todo : Implement these
-    // Admins
-    // Questions
-    // ContentWriters
+    @GetMapping("/users")
+    public List<User> getAllUsers() { return userRepository.findAll(); }
+
+    @GetMapping("user/{id}")
+    public User getUserById(@PathVariable(name = "id") Long id) {
+        return userRepository.findById(id).orElseThrow();
+    }
 
     @GetMapping("/rounds")
-    public List<Round> getAllRounds() {
-        return roundRepository.findAll();
-    }
+    public List<Round> getAllRounds() { return roundRepository.findAll(); }
 
     @GetMapping("/round/{id}")
-    public Round getRoundById(@PathVariable(name = "id") Long id) {
-        return roundRepository.findById(id).orElseThrow();
-    }
+    public Round getRoundById(@PathVariable(name = "id") Long id) { return roundRepository.findById(id).orElseThrow(); }
 
+    @GetMapping("/admins")
+    public List<Admin> getAllAdmins() { return adminRepository.findAll(); }
 
+    @GetMapping("/admin/{id}")
+    public Admin getAdminById(@PathVariable(name = "id") Long id) { return adminRepository.findById(id).orElseThrow(); }
 }
-
-// localhost:8080/dev-test/

@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.lang.annotation.Inherited;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,9 +34,19 @@ public abstract class User extends Auditable {
     @Setter
     Set<Role> roles = new HashSet<>();
 
-    public User() {}
+    @OneToOne(cascade = CascadeType.ALL)
+    @Getter
+    @Setter
+    private Stat stat = new Stat();
 
-    public User(User user) { // copy constructor
+    @ManyToMany(mappedBy = "players")
+    @Getter
+    @Setter
+    private Set<Game> games = new HashSet<>();
+
+    public User() { }
+
+    public User(User user) {
         email = user.getEmail();
         saltedHashedPassword = user.getSaltedHashedPassword();
         roles = user.getRoles();

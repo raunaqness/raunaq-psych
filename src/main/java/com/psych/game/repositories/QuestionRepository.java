@@ -8,12 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface QuestionRepository extends JpaRepository<Question, Long> {
-    // jpa provides its own query language
-    // JPA - ORM, so we can code DB stuff in java
-    // abstracts out the differences between DB backends
-
-    // nativeQuery = pass this query directly to DB
-    // todo
-    @Query(value="SELECT * FROM questions WHERE gameMode=:gameMode ORDER BY RAND() LIMIT 1", nativeQuery = true)
+    @Query(value="SELECT * FROM questions WHERE gameMode=:gameMode ORDER BY RAND() LIMIT 1", nativeQuery = true) //todo
     Question getRandomQuestion(GameMode gameMode);
 }

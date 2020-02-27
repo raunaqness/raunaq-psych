@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "roles")
+@Table(name="roles")
 public class Role extends Auditable {
     @NotBlank
     @Column(unique = true)
@@ -18,7 +18,7 @@ public class Role extends Auditable {
     private String name;
 
     @NotBlank
-    @Getter
     @Setter
+    @Getter
     private String description;
 }
